@@ -219,11 +219,11 @@ tbody tr:last-child td{border-bottom:none}
         </div>
         <div class="fg">
           <label for="f-status-it">Testo Status (Italiano)</label>
-          <input type="text" id="f-status-it" placeholder="In sviluppo Q4 2026" required>
+          <input type="text" id="f-status-it" placeholder="In sviluppo RTB atteso Q2 2027" required>
         </div>
         <div class="fg">
           <label for="f-status-en">Status Text (Inglese)</label>
-          <input type="text" id="f-status-en" placeholder="In progress Q4 2026" required>
+          <input type="text" id="f-status-en" placeholder="In progress expected RTB Q2 2027" required>
         </div>
       </div>
       <div style="display:flex;justify-content:flex-end;gap:.8rem;margin-top:1rem">
@@ -388,8 +388,8 @@ function syncStatusDefaults() {
     stIt.value = "RTB";
     stEn.value = "RTB";
   } else if (stIt.value === "RTB" || !stIt.value) {
-    stIt.value = "In sviluppo Q4 2026";
-    stEn.value = "In progress Q4 2026";
+    stIt.value = "In sviluppo RTB atteso Q2 2027";
+    stEn.value = "In progress expected RTB Q2 2027";
   }
 }
 
@@ -422,8 +422,8 @@ function openModal(id) {
     document.getElementById("f-region-it").value = "Sicilia";
     document.getElementById("f-region-en").value = "Sicily";
     document.getElementById("f-status-type").value = "prog";
-    document.getElementById("f-status-it").value = "In sviluppo Q4 2026";
-    document.getElementById("f-status-en").value = "In progress Q4 2026";
+    document.getElementById("f-status-it").value = "In sviluppo RTB atteso Q2 2027";
+    document.getElementById("f-status-en").value = "In progress expected RTB Q2 2027";
   }
   modal.classList.add("open");
 }

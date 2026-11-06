@@ -33,8 +33,8 @@ function normalizeRow(row: Record<string, unknown>, idx = 0): ProjectItem {
     region_it: String(row.region_it ?? "Sicilia").trim(),
     region_en: String(row.region_en ?? (row.region_it === "Sardegna" ? "Sardinia" : "Sicily")).trim(),
     status_type: row.status_type === "rtb" ? "rtb" : "prog",
-    status_it: String(row.status_it ?? (row.status_type === "rtb" ? "RTB" : "In sviluppo Q4 2026")).trim(),
-    status_en: String(row.status_en ?? (row.status_type === "rtb" ? "RTB" : "In progress Q4 2026")).trim(),
+    status_it: String(row.status_it ?? (row.status_type === "rtb" ? "RTB" : "In sviluppo RTB atteso Q2 2027")).trim(),
+    status_en: String(row.status_en ?? (row.status_type === "rtb" ? "RTB" : "In progress expected RTB Q2 2027")).trim(),
   };
 }
 
