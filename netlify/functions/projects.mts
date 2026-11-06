@@ -215,3 +215,4 @@ export default async (req: Request, _context: Context) => {
 export const config: Config = {
   path: "/api/projects",
 };
+

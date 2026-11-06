@@ -26,3 +26,4 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
   { id: 11, position: 11, name: "VIZ 4", dc_mwp: 3.68, ac_mwp: 3.30, bess: 0, region_it: "Sicilia",  region_en: "Sicily",   status_type: "prog", status_it: "In sviluppo Q4 2026", status_en: "In progress Q4 2026" },
   { id: 12, position: 12, name: "LIC 2", dc_mwp: 6.90, ac_mwp: 6.60, bess: 0, region_it: "Sicilia",  region_en: "Sicily",   status_type: "prog", status_it: "In sviluppo Q4 2026", status_en: "In progress Q4 2026" },
 ];
+

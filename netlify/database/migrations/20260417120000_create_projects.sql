@@ -27,3 +27,4 @@ INSERT INTO projects (position, name, dc_mwp, ac_mwp, bess, region_it, region_en
   (10, 'VIZ 3', 7.58, 7.26, 0, 'Sicilia',  'Sicily',   'prog', 'In sviluppo Q4 2026', 'In progress Q4 2026'),
   (11, 'VIZ 4', 3.68, 3.30, 0, 'Sicilia',  'Sicily',   'prog', 'In sviluppo Q4 2026', 'In progress Q4 2026'),
   (12, 'LIC 2', 6.90, 6.60, 0, 'Sicilia',  'Sicily',   'prog', 'In sviluppo Q4 2026', 'In progress Q4 2026');
+
