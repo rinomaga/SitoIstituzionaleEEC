@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEC srl – Energy Engineering Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--sun:#E8960A;--sun2:#FBB034;--sun3:#FEF3DC;--navy:#0D2545;--navy2:#163358;--slate:#3A5577;--light:#9BB5CE;--pale:#EDF3F9;--white:#FFFFFF;--gray:#F4F7FB;--text:#1A2E45;--text2:#3D5470;--muted:#7A95AE;--green:#1DB385;--r:10px;--sh:0 4px 24px rgba(13,37,69,.08);--sh2:0 12px 48px rgba(13,37,69,.14);--t:.3s cubic-bezier(.4,0,.2,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;line-height:1.6}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+#topbar{position:fixed;top:0;left:0;right:0;z-index:1001;background:var(--navy2);height:40px;display:flex;align-items:center;justify-content:flex-end;padding:0 clamp(1rem,4vw,3rem);border-bottom:1px solid rgba(255,255,255,.1)}
+.tb-lang{display:flex;align-items:center;gap:8px}
+.tb-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:2px solid rgba(255,255,255,.35);border-radius:6px;padding:4px 12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:.06em;transition:all var(--t)}
+.tb-btn img{width:22px;height:15px;border-radius:2px;object-fit:cover}
+.tb-btn:hover{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.6)}
+.tb-btn.active{background:var(--sun);border-color:var(--sun);color:#fff}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.2)}
+
+nav{position:fixed;top:40px;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5vw,4rem);height:68px;background:#0D2545;border-bottom:2px solid rgba(255,255,255,.1);box-shadow:0 2px 20px rgba(13,37,69,.3)}
+.nav-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:40px;width:auto;background:#fff;border-radius:4px;padding:2px 6px}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{display:block;position:relative;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none;padding:6px 14px;border-radius:7px;transition:color var(--t),background var(--t)}
+.nav-links a:hover{color:var(--sun2);background:rgba(232,150,10,.2)}
+.nav-links a.active{color:var(--sun2);background:rgba(232,150,10,.2)}
+.nav-links a.active::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:18px;height:2.5px;background:var(--sun2);border-radius:2px}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:var(--t)}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:108px;left:0;right:0;bottom:0;z-index:999;background:var(--white);flex-direction:column;overflow-y:auto;border-top:2px solid var(--pale)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:var(--navy);text-decoration:none;padding:1rem 2rem;border-bottom:1px solid var(--pale);transition:all var(--t)}
+.mobile-menu a:hover{color:var(--sun);background:var(--sun3)}
+
+.btn-p{display:inline-flex;align-items:center;gap:6px;background:var(--sun);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;padding:.9rem 2.2rem;border-radius:var(--r);text-decoration:none;border:none;cursor:pointer;transition:all var(--t);box-shadow:0 4px 16px rgba(232,150,10,.35)}
+.btn-p:hover{background:#d4870a;transform:translateY(-2px)}
+.btn-o{display:inline-flex;align-items:center;gap:6px;background:transparent;color:#fff;font-family:'Syne',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;padding:.9rem 2.2rem;border-radius:var(--r);text-decoration:none;border:2px solid rgba(255,255,255,.5);cursor:pointer;transition:all var(--t)}
+.btn-o:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+.btn-n{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;padding:.9rem 2.2rem;border-radius:var(--r);text-decoration:none;border:none;cursor:pointer;transition:all var(--t)}
+.btn-n:hover{background:var(--navy2);transform:translateY(-2px)}
+
+section{padding:clamp(5rem,9vw,8rem) clamp(1.5rem,6vw,6rem)}
+.stag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--sun);margin-bottom:1rem}
+.stag::before{content:'';width:18px;height:2px;background:var(--sun);display:block}
+.stit{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:var(--navy);margin-bottom:1.4rem}
+.slead{font-size:1.05rem;color:var(--text2);font-weight:300;line-height:1.8;max-width:580px}
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;margin-top:108px}
+.hero-bg{position:absolute;inset:0;background-image:url('hero-bg.jpg');background-size:cover;background-position:center 30%}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,37,69,.35) 0%,rgba(13,37,69,.25) 40%,rgba(13,37,69,.75) 80%,rgba(13,37,69,.92) 100%)}
+.hero-ct{position:relative;z-index:1;padding:0 clamp(1.5rem,6vw,6rem) clamp(4rem,8vw,7rem);max-width:900px}
+.hero-ey{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--sun2);margin-bottom:1.4rem}
+.hero-ey::before{content:'';display:block;width:28px;height:2px;background:var(--sun2)}
+h1.ht{font-size:clamp(2.6rem,6.5vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:#fff;margin-bottom:1.6rem}
+h1.ht em{font-style:normal;color:var(--sun2)}
+.hd{font-size:clamp(.95rem,1.5vw,1.1rem);color:rgba(255,255,255,.85);font-weight:300;max-width:560px;line-height:1.8;margin-bottom:2.8rem}
+.hctas{display:flex;gap:1rem;flex-wrap:wrap}
+.hstats{position:relative;z-index:1;display:flex;background:#fff;flex-wrap:wrap}
+.sb{flex:1;min-width:120px;padding:1.8rem 2rem;border-right:1px solid var(--pale);text-align:center}
+.sb:last-child{border-right:none}
+.sn{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;color:var(--sun);line-height:1}
+.sl{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+
+#about{background:var(--white)}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.aim{width:100%;height:480px;object-fit:cover;border-radius:12px;box-shadow:var(--sh2)}
+.aib{position:absolute;bottom:-1.5rem;right:-1.5rem;background:var(--sun);color:#fff;border-radius:10px;padding:1.4rem 1.8rem;box-shadow:0 8px 32px rgba(232,150,10,.35)}
+.aib strong{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;display:block;line-height:1}
+.aib span{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.aiwrap{position:relative}
+.pils{display:flex;flex-direction:column;gap:1rem;margin-top:2.5rem}
+.pil{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.5rem;background:var(--gray);border-radius:var(--r);border-left:3px solid var(--sun);font-weight:500;font-size:.95rem;color:var(--text2)}
+
+#services{background:var(--gray)}
+.stop{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem}
+.shi{width:100%;height:380px;object-fit:cover;border-radius:12px;box-shadow:var(--sh2)}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.sc{background:#fff;border-radius:12px;padding:2.2rem 1.8rem;border:1.5px solid transparent;box-shadow:var(--sh);transition:all var(--t);position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sun);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
+.sc:hover{transform:translateY(-6px);box-shadow:var(--sh2)}.sc:hover::before{transform:scaleX(1)}
+.si{width:52px;height:52px;background:var(--sun3);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem}
+.sc h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.8rem}
+.sc p{font-size:.87rem;color:var(--text2);line-height:1.75}
+
+#projects{background:var(--navy)}
+#projects .stag{color:var(--sun2)}#projects .stag::before{background:var(--sun2)}
+#projects .stit{color:#fff}#projects .slead{color:var(--light)}
+.ph{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;gap:2rem;flex-wrap:wrap}
+.tw{overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.08)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+thead tr{background:rgba(255,255,255,.06);border-bottom:1px solid rgba(232,150,10,.3)}
+th{font-family:'Syne',sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sun2);padding:1.1rem 1.5rem;text-align:left;white-space:nowrap}
+td{padding:1rem 1.5rem;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.05)}
+tbody tr:hover{background:rgba(255,255,255,.04)}
+tbody tr:last-child td{border-bottom:none}
+.brtb{display:inline-block;padding:.25rem .75rem;border-radius:100px;font-size:.72rem;font-weight:600;background:rgba(29,179,133,.18);color:#2ECC9A}
+.bprog{display:inline-block;padding:.25rem .75rem;border-radius:100px;font-size:.72rem;font-weight:500;background:rgba(232,150,10,.18);color:var(--sun2)}
+.ptot{margin-top:1.8rem;text-align:right;font-size:.88rem;color:var(--light)}
+.ptot strong{color:var(--sun2);font-family:'Syne',sans-serif;font-size:1.1rem}
+
+#team{background:var(--white)}
+.tig{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem}
+.timg{width:100%;height:360px;object-fit:cover;border-radius:12px;box-shadow:var(--sh2)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.tc{background:var(--gray);border-radius:12px;padding:2.2rem 2rem;border:1.5px solid var(--pale);transition:all var(--t)}
+.tc:hover{box-shadow:var(--sh2);transform:translateY(-4px)}
+.tav{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--slate));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#fff;margin-bottom:1.2rem}
+.tc h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.3rem}
+.trole{font-size:.75rem;color:var(--sun);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:.9rem}
+.tc p{font-size:.86rem;color:var(--text2);line-height:1.72}
+.tc a{color:var(--sun);font-size:.83rem;margin-top:.9rem;display:inline-block;text-decoration:none;font-weight:500}
+
+#opportunities{background:var(--gray)}
+.oh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;gap:2rem;flex-wrap:wrap}
+.odis{background:var(--sun3);border-left:4px solid var(--sun);border-radius:0 var(--r) var(--r) 0;padding:1rem 1.4rem;margin-bottom:3rem;font-size:.85rem;color:var(--text2);line-height:1.6}
+.odis strong{color:var(--navy)}
+.pcard{background:#fff;border-radius:14px;border:1.5px solid var(--pale);box-shadow:var(--sh2);overflow:hidden;margin-bottom:2.5rem}
+.pchero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1a4570 100%);padding:2.5rem 2.8rem;position:relative;overflow:hidden}
+.pchero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(232,150,10,.12)}
+.pbadge{display:inline-flex;align-items:center;gap:6px;background:rgba(232,150,10,.2);border:1px solid rgba(232,150,10,.4);color:var(--sun2);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .8rem;border-radius:100px;margin-bottom:1.2rem}
+.pname{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:.5rem}
+.psub{font-size:.9rem;color:rgba(255,255,255,.6);margin-bottom:1.8rem}
+.pkpis{display:flex;gap:2rem;flex-wrap:wrap}
+.kv{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--sun2);line-height:1}
+.kl{font-size:.7rem;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-top:.25rem}
+.pcbody{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.pcol{padding:2rem 2.2rem;border-right:1px solid var(--pale)}
+.pcol:last-child{border-right:none}
+.pcol:nth-child(3),.pcol:nth-child(4){border-top:1px solid var(--pale)}
+.coltit{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);margin-bottom:1rem}
+.ckl{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.ckl li{display:flex;align-items:flex-start;gap:.6rem;font-size:.87rem;color:var(--text2);line-height:1.5}
+.ckl li::before{content:'\2713';color:var(--green);font-weight:700;flex-shrink:0;margin-top:.05rem}
+.ckl li.warn::before{content:'\25CB';color:var(--sun)}
+.tlist{display:flex;flex-direction:column;gap:0}
+.ti{display:flex;gap:1rem;align-items:flex-start;padding-bottom:1.1rem;position:relative}
+.ti:last-child{padding-bottom:0}
+.ti:not(:last-child)::before{content:'';position:absolute;left:10px;top:22px;width:2px;height:calc(100% - 10px);background:linear-gradient(to bottom,var(--sun),var(--pale))}
+.tdot{width:22px;height:22px;flex-shrink:0;border-radius:50%;border:2px solid var(--sun);background:#fff;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.tdot.done{background:var(--sun)}
+.tdot.done::after{content:'\2713';font-size:10px;color:#fff;font-weight:700}
+.tdate{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--sun);margin-bottom:.2rem}
+.tlabel{font-size:.87rem;font-weight:600;color:var(--navy)}
+.tdesc{font-size:.78rem;color:var(--muted);margin-top:.15rem;line-height:1.4}
+.pcfoot{padding:1.6rem 2.2rem;background:var(--gray);border-top:1px solid var(--pale);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.pcfoot p{font-size:.84rem;color:var(--muted)}
+.pcfoot strong{color:var(--navy)}
+.csg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.csc{background:#fff;border-radius:12px;border:1.5px dashed var(--light);padding:2rem 1.8rem;text-align:center}
+.csc .ci{font-size:2rem;margin-bottom:.8rem}
+.csc h4{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--slate);margin-bottom:.4rem}
+.csc p{font-size:.82rem;color:var(--muted)}
+
+#contact{background:var(--white)}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.cf{display:flex;flex-direction:column;gap:1.2rem}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.ff{display:flex;flex-direction:column;gap:.4rem}
+.ff label{font-size:.74rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+.ff input,.ff textarea{background:var(--gray);border:1.5px solid var(--pale);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.94rem;padding:.85rem 1.1rem;border-radius:var(--r);outline:none;transition:border-color var(--t);width:100%}
+.ff input:focus,.ff textarea:focus{border-color:var(--sun)}
+.ff textarea{resize:vertical;min-height:120px}
+.ci-list{display:flex;flex-direction:column;gap:2rem}
+.cii{display:flex;gap:1.2rem;align-items:flex-start}
+.cicon{width:44px;height:44px;flex-shrink:0;background:var(--sun3);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.cii h4{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.cii p{font-size:.94rem;color:var(--text)}
+.cii a{color:var(--navy);text-decoration:none;font-weight:500}
+.cii a:hover{color:var(--sun)}
+
+footer{background:var(--navy);color:rgba(255,255,255,.6);padding:3rem clamp(1.5rem,6vw,6rem);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem}
+.flogo{background:#fff;border-radius:8px;padding:.5rem 1rem;display:inline-block;margin-bottom:.8rem}
+.flogo img{height:40px;width:auto;display:block}
+footer p{font-size:.8rem}
+footer nav{display:flex;gap:2rem;flex-wrap:wrap;align-items:center}
+footer nav a{font-size:.8rem;color:rgba(255,255,255,.5);text-decoration:none;transition:color var(--t)}
+footer nav a:hover{color:var(--sun2)}
+
+body.lang-en [data-it]{display:none!important}
+body.lang-it [data-en]{display:none!important}
+
+@media(max-width:960px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .ag,.stop,.tig,.cg{grid-template-columns:1fr}
+  .aiwrap{order:-1}.aib{right:1rem;bottom:-1rem}
+  .sgrid{grid-template-columns:1fr 1fr}
+  .pcbody{grid-template-columns:1fr}
+  .pcol{border-right:none!important;border-top:1px solid var(--pale)}
+  .pcol:first-child{border-top:none}
+  .csg{grid-template-columns:1fr}
+  .hstats{flex-wrap:wrap}
+  .sb{min-width:45%;border-right:none;border-bottom:1px solid var(--pale)}
+}
+@media(max-width:600px){
+  .sgrid{grid-template-columns:1fr}
+  .fr{grid-template-columns:1fr}
+  .hctas{flex-direction:column}
+  .sb{min-width:100%}
+  .pcfoot{flex-direction:column}
+}
+</style>
+</head>
+<body class="lang-it">
+
+<div id="topbar">
+  <div class="tb-lang">
+    <button class="tb-btn active" id="btn-it" onclick="setLang('it')"><img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano</button>
+    <div class="tb-sep"></div>
+    <button class="tb-btn" id="btn-en" onclick="setLang('en')"><img src="https://flagcdn.com/w40/gb.png" alt="EN"> English</button>
+  </div>
+</div>
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo"><img src="ECC_Logo.jpg" alt="EEC srl"></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#hero" data-section="hero" data-it>Home</a><a href="#hero" data-section="hero" data-en>Home</a></li>
+    <li><a href="#about" data-section="about" data-it>Chi Siamo</a><a href="#about" data-section="about" data-en>About</a></li>
+    <li><a href="#services" data-section="services" data-it>Servizi</a><a href="#services" data-section="services" data-en>Services</a></li>
+    <li><a href="#projects" data-section="projects" data-it>Progetti</a><a href="#projects" data-section="projects" data-en>Projects</a></li>
+    <li><a href="#team" data-section="team" data-it>Team</a><a href="#team" data-section="team" data-en>Team</a></li>
+    <li><a href="#opportunities" data-section="opportunities" data-it>Opportunit&agrave;</a><a href="#opportunities" data-section="opportunities" data-en>Opportunities</a></li>
+    <li><a href="#contact" data-section="contact" data-it>Contatti</a><a href="#contact" data-section="contact" data-en>Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#hero" onclick="closeMobile()"><span data-it>Home</span><span data-en>Home</span></a>
+  <a href="#about" onclick="closeMobile()"><span data-it>Chi Siamo</span><span data-en>About</span></a>
+  <a href="#services" onclick="closeMobile()"><span data-it>Servizi</span><span data-en>Services</span></a>
+  <a href="#projects" onclick="closeMobile()"><span data-it>Progetti</span><span data-en>Projects</span></a>
+  <a href="#team" onclick="closeMobile()">Team</a>
+  <a href="#opportunities" onclick="closeMobile()"><span data-it>Opportunit&agrave;</span><span data-en>Opportunities</span></a>
+  <a href="#contact" onclick="closeMobile()"><span data-it>Contatti</span><span data-en>Contact</span></a>
+</div>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ct">
+    <div class="hero-ey">Renewable Energy Developer</div>
+    <h1 class="ht">
+      <span data-it>Energia solare.<br>Ingegneria <em>di valore.</em></span>
+      <span data-en>Solar energy.<br>Engineering <em>that delivers.</em></span>
+    </h1>
+    <p class="hd" data-it>EEC srl &egrave; una societ&agrave; di ingegneria specializzata nello sviluppo, progettazione, finanziamento e costruzione di impianti fotovoltaici utility scale e sistemi BESS. Oltre 20 anni di esperienza nelle energie rinnovabili.</p>
+    <p class="hd" data-en>EEC srl specialises in development, design, financing and construction of utility-scale solar PV plants and BESS systems. Over 20 years of experience in renewable energy.</p>
+    <div class="hctas">
+      <a href="#services" class="btn-p" data-it>Scopri i Servizi &rarr;</a>
+      <a href="#services" class="btn-p" data-en>Explore Services &rarr;</a>
+      <a href="#opportunities" class="btn-o" data-it>Opportunit&agrave; Investitori</a>
+      <a href="#opportunities" class="btn-o" data-en>Investor Opportunities</a>
+    </div>
+  </div>
+  <div class="hstats">
+    <div class="sb"><div class="sn">20+</div><div class="sl" data-it>Anni Esperienza</div><div class="sl" data-en>Years Experience</div></div>
+    <div class="sb"><div class="sn">73.9</div><div class="sl">MWp Pipeline DC</div></div>
+    <div class="sb"><div class="sn">12</div><div class="sl" data-it>Progetti Attivi</div><div class="sl" data-en>Active Projects</div></div>
+    <div class="sb"><div class="sn">360&deg;</div><div class="sl" data-it>Servizi</div><div class="sl" data-en>Services</div></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="ag">
+    <div class="aiwrap fade-up">
+      <img class="aim" src="hero-bg.jpg" alt="EEC impianto fotovoltaico">
+      <div class="aib"><strong>360&deg;</strong><span data-it>Servizi di Ingegneria</span><span data-en>Engineering Services</span></div>
+    </div>
+    <div>
+      <div class="stag" data-it>Chi Siamo</div><div class="stag" data-en>About Us</div>
+      <h2 class="stit fade-up" data-it>Professionisti delle energie rinnovabili</h2>
+      <h2 class="stit fade-up" data-en>Renewable energy professionals</h2>
+      <p class="slead fade-up d1" data-it>EEC srl &mdash; Energy Engineering Consulting &mdash; &egrave; una societ&agrave; italiana con sede a Messina. Con oltre 20 anni di esperienza, offre servizi a 360&deg; per lo sviluppo, progettazione, finanziamento, costruzione e gestione di impianti da fonti rinnovabili.</p>
+      <p class="slead fade-up d1" data-en>EEC srl &mdash; Energy Engineering Consulting &mdash; is an Italian company based in Messina. With over 20 years of experience, it offers 360&deg; services for development, design, financing, construction and operation of renewable energy plants.</p>
+      <div class="pils fade-up d2">
+        <div class="pil" data-it>&#10003; Sviluppo progetti solari utility scale e C&amp;I</div>
+        <div class="pil" data-en>&#10003; Utility scale &amp; C&amp;I solar project development</div>
+        <div class="pil" data-it>&#10003; Progettazione esecutiva e permitting in Italia</div>
+        <div class="pil" data-en>&#10003; Executive engineering and permitting in Italy</div>
+        <div class="pil" data-it>&#10003; Finanziamento strutturato, project financing e PPA</div>
+        <div class="pil" data-en>&#10003; Structured financing, project financing and PPA</div>
+        <div class="pil" data-it>&#10003; Sistemi di accumulo energia (BESS)</div>
+        <div class="pil" data-en>&#10003; Battery energy storage systems (BESS)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="stop">
+    <div>
+      <div class="stag" data-it>Cosa Facciamo</div><div class="stag" data-en>What We Do</div>
+      <h2 class="stit fade-up" data-it>I Nostri Servizi</h2><h2 class="stit fade-up" data-en>Our Services</h2>
+      <p class="slead fade-up d1" data-it>Un approccio multidisciplinare per seguire ogni fase &mdash; dagli aspetti tecnici e normativi a quelli economici &mdash; fino al progetto finale cantierabile.</p>
+      <p class="slead fade-up d1" data-en>A multidisciplinary approach covering every phase &mdash; from technical and regulatory to economic aspects &mdash; through to the final ready-to-build project.</p>
+      <a href="#contact" class="btn-n" style="margin-top:2rem" data-it>Richiedi una consulenza &rarr;</a>
+      <a href="#contact" class="btn-n" style="margin-top:2rem" data-en>Request a consultation &rarr;</a>
+    </div>
+    <img class="shi fade-up d1" src="servizi.jpg" alt="EEC servizi">
+  </div>
+  <div class="sgrid">
+    <div class="sc fade-up"><div class="si"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div><h3 data-it>Sviluppo Progetti</h3><h3 data-en>Project Development</h3><p data-it>Coordinazione tecnica, normativa, autorizzativa, economica e finanziaria. Progetto finale cantierabile.</p><p data-en>Technical, regulatory, permitting, economic and financial coordination. Final ready-to-build project.</p></div>
+    <div class="sc fade-up d1"><div class="si"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><h3 data-it>Progettazione &amp; Permitting</h3><h3 data-en>Engineering &amp; Permitting</h3><p data-it>Progettazione esecutiva, gestione autorizzativa, assistenza costruzione, collaudo e commissioning.</p><p data-en>Executive design, permitting management, construction assistance, testing and commissioning.</p></div>
+    <div class="sc fade-up d2"><div class="si"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3 data-it>Costruzione &amp; EPC</h3><h3 data-en>Construction &amp; EPC</h3><p data-it>Selezione contractor EPC/O&amp;M, negoziazione contratti, supervisione con focus su sicurezza e qualit&agrave;.</p><p data-en>EPC/O&amp;M contractor selection, contract negotiation, supervision focused on safety and quality.</p></div>
+    <div class="sc fade-up"><div class="si"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3 data-it>Finanziamento &amp; PPA</h3><h3 data-en>Financing &amp; PPA</h3><p data-it>Mobilizzazione capitali tramite banche e DFI. Assistenza in vendita asset, due diligence e PPA.</p><p data-en>Capital raising through banks and DFIs. Support in asset sales, due diligence and PPA.</p></div>
+    <div class="sc fade-up d1"><div class="si"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Project Management</h3><p data-it>Coordinamento dei subappaltatori, consulenza per l&rsquo;avviamento degli impianti, gestione della Direzione e Contabilit&agrave; Lavori secondo le best practices internazionali.</p><p data-en>Subcontractor coordination, plant start-up consultancy, management of Site Supervision and Works Accounting according to international best practices.</p></div>
+    <div class="sc fade-up d2"><div class="si"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div><h3 data-it>Accumulo Energia (BESS)</h3><h3 data-en>Energy Storage (BESS)</h3><p data-it>Progettazione e integrazione di sistemi di accumulo abbinati a impianti fotovoltaici di qualsiasi taglia.</p><p data-en>Design and integration of energy storage systems combined with solar PV plants of any size.</p></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="ph">
+    <div><div class="stag" data-it>Pipeline Attuale</div><div class="stag" data-en>Current Pipeline</div>
+    <h2 class="stit" data-it>Progetti in Sviluppo</h2><h2 class="stit" data-en>Projects in Development</h2></div>
+    <p class="slead" style="max-width:380px" data-it>Portafoglio di progetti fotovoltaici in Sicilia e Sardegna.</p>
+    <p class="slead" style="max-width:380px" data-en>Portfolio of solar projects in Sicily and Sardinia.</p>
+  </div>
+  <div class="tw fade-up"><table>
+    <thead><tr><th>#</th><th data-it>Progetto</th><th data-en>Project</th><th>DC MWp</th><th>AC MWp</th><th data-it>Regione</th><th data-en>Region</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>VIZ 1</td><td>6.38</td><td>5.94</td><td>Sicilia</td><td><span class="brtb">RTB</span></td></tr>
+      <tr><td>2</td><td>VIZ 2</td><td>8.52</td><td>7.92</td><td>Sicilia</td><td><span class="brtb">RTB</span></td></tr>
+      <tr><td>3</td><td>SEN 1</td><td>3.56</td><td>3.30</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>4</td><td>SEN 2</td><td>7.95</td><td>7.59</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>5</td><td>SEN 3</td><td>3.64</td><td>3.30</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>6</td><td>SEN 4</td><td>3.49</td><td>3.30</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>7</td><td>SEN 5</td><td>6.34</td><td>5.94</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>8</td><td>SEN 6</td><td>5.93</td><td>6.61</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>9</td><td>LIC 1</td><td>9.83</td><td>9.57</td><td>Sicilia</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>10</td><td>VIZ 3</td><td>7.58</td><td>7.26</td><td>Sicilia</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>11</td><td>VIZ 4</td><td>3.68</td><td>3.30</td><td>Sicilia</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>12</td><td>LIC 2</td><td>6.90</td><td>6.60</td><td>Sicilia</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="ptot"><span data-it>Totale: </span><span data-en>Total: </span><strong>73.9 MWp DC</strong></div>
+</section>
+
+<section id="team">
+  <div class="tig">
+    <div>
+      <div class="stag" data-it>Le Persone</div><div class="stag" data-en>Our People</div>
+      <h2 class="stit fade-up" data-it>Il Nostro Team</h2><h2 class="stit fade-up" data-en>Our Team</h2>
+      <p class="slead fade-up d1" data-it>Ingegneri, geologi, architetti, tecnici impiantisti, project manager e specialisti in finanza e sostenibilit&agrave;.</p>
+      <p class="slead fade-up d1" data-en>Engineers, geologists, architects, plant technicians, project managers and finance and sustainability specialists.</p>
+    </div>
+    <img class="timg fade-up d1" src="team.jpg" alt="EEC Team">
+  </div>
+  <div class="tgrid">
+    <div class="tc fade-up"><div class="tav">SM</div><h3>Ing. Salvatore Magazu</h3><div class="trole" data-it>CEO &amp; Direttore Tecnico</div><div class="trole" data-en>CEO &amp; Technical Director</div><p data-it>Oltre 20 anni di esperienza nello sviluppo di progetti solari in Europa. Competenze in project financing e partnership strategiche.</p><p data-en>Over 20 years of experience in solar project development across Europe. Expertise in project financing and strategic partnerships.</p><a href="mailto:s.magazu@eec-srl.it">s.magazu@eec-srl.it</a></div>
+    <div class="tc fade-up d1"><div class="tav">LC</div><h3>Leo Cavallaro</h3><div class="trole" data-it>Responsabile Sviluppo</div><div class="trole" data-en>Head of Development</div><p data-it>Coordinamento autorizzativo e relazioni con gli stakeholder locali e istituzionali.</p><p data-en>Permitting coordination and relations with local and institutional stakeholders.</p></div>
+    <div class="tc fade-up d2"><div class="tav" style="font-size:1.4rem">&#128101;</div><h3 data-it>Team Tecnico</h3><h3 data-en>Technical Team</h3><div class="trole" data-it>Ingegneri &amp; Specialisti</div><div class="trole" data-en>Engineers &amp; Specialists</div><p data-it>Team multidisciplinare con competenze in ogni fase del ciclo di vita di un impianto fotovoltaico.</p><p data-en>Multidisciplinary team with skills at every phase of the solar plant lifecycle.</p></div>
+  </div>
+</section>
+
+<section id="opportunities">
+  <div class="oh">
+    <div><div class="stag" data-it>Co-Sviluppo</div><div class="stag" data-en>Co-Development</div>
+    <h2 class="stit fade-up" data-it>Opportunit&agrave; per Investitori</h2>
+    <h2 class="stit fade-up" data-en>Investor Opportunities</h2></div>
+    <p class="slead" style="max-width:400px" data-it>Accordi di co-sviluppo su progetti selezionati, gi&agrave; analizzati nelle fasi preliminari da EEC.</p>
+    <p class="slead" style="max-width:400px" data-en>Co-development agreements on selected projects, already analysed by EEC through preliminary stages.</p>
+  </div>
+  <div class="odis"><strong data-it>Nota per gli Investitori: </strong><strong data-en>Investor Notice: </strong><span data-it>Informazioni riservate destinate a investitori qualificati. I dati si basano su analisi preliminari soggetti a verifica in due diligence. Contattare EEC per accedere alla data room.</span><span data-en>Confidential information for qualified investors only. Data based on preliminary analyses, subject to due diligence verification. Contact EEC to access the data room.</span></div>
+
+  <div class="pcard fade-up">
+    <div class="pchero">
+      <div class="pbadge" data-it>&#9679; Disponibile per Co-Sviluppo</div><div class="pbadge" data-en>&#9679; Available for Co-Development</div>
+      <div class="pname">Licodia 5</div>
+      <div class="psub">Licodia Eubea (CT) &mdash; Sicilia &nbsp;|&nbsp; Agro-PV Avanzato &nbsp;|&nbsp; P.A.S.</div>
+      <div class="pkpis"><div><div class="kv">9.94</div><div class="kl" data-it>MWp DC</div></div><div><div class="kv">9.57</div><div class="kl" data-it>MWp AC</div></div><div><div class="kv">~20.3</div><div class="kl" data-it>GWh/anno</div></div><div><div class="kv">20.97</div><div class="kl" data-it>Ha terreno</div></div></div>
+    </div>
+    <div class="pcbody">
+      <div class="pcol"><div class="coltit" data-it>Descrizione</div><div class="coltit" data-en>Overview</div><ul class="ckl"><li data-it>Agro-PV Avanzato con moduli bifacciali su single-axis tracker, strutture a 2.2 m per continuit&agrave; agricola</li><li data-en>Advanced Agro-PV with bifacial modules on single-axis trackers, 2.2 m structures for agricultural continuity</li><li data-it>Classificato Agro-PV Avanzato (D.Lgs. 1/2012): iter P.A.S./SCIA semplificato</li><li data-en>Classified Advanced Agro-PV (D.Lgs. 1/2012): simplified P.A.S./SCIA permitting</li><li data-it>14.840 moduli bifacciali 670Wp &mdash; yield 2.122 kWh/kWp/anno (PVGIS-SARAH3)</li><li data-en>14,840 bifacial modules 670Wp &mdash; yield 2,122 kWh/kWp/year (PVGIS-SARAH3)</li><li data-it>Terreno pianeggiante a 482 m, accessibile da strada pubblica</li><li data-en>Flat terrain at 482 m altitude, accessible from public road</li></ul></div>
+      <div class="pcol"><div class="coltit" data-it>&#10003; Vincoli &amp; Terreni</div><div class="coltit" data-en>&#10003; Constraints &amp; Land</div><ul class="ckl"><li data-it>Zone SIC/ZPS, IBA, ZPE, Ramsar &mdash; <strong>nessun vincolo</strong></li><li data-en>SIC/SPA, IBA, ZPE, Ramsar areas &mdash; <strong>no constraint</strong></li><li data-it>PAI (frane, pericolosit&agrave; idrogeologica e idraulica) &mdash; <strong>nessun vincolo</strong></li><li data-en>PAI (landslide, hydrogeological and hydraulic hazard) &mdash; <strong>no constraint</strong></li><li data-it>Carta Forestale, Rete Ecologica Siciliana, Natura 2000 &mdash; <strong>nessun vincolo</strong></li><li data-en>Forest map, Sicilian Ecological Network, Natura 2000 &mdash; <strong>no constraint</strong></li><li data-it>Piano Paesaggistico: porzioni interessate gi&agrave; <strong>escluse dall&rsquo;area</strong></li><li data-en>Landscape Plan: affected portions already <strong>excluded from area</strong></li><li data-it>Accordo preliminare notarile disponibile in data room (&euro;40.000/ha)</li><li data-en>Notarised preliminary agreement in data room (&euro;40,000/ha)</li></ul></div>
+      <div class="pcol"><div class="coltit" data-it>Stato Attuale</div><div class="coltit" data-en>Current Status</div><ul class="ckl"><li data-it>Progetto preliminare e analisi vincolistica completati con esito positivo da EEC</li><li data-en>Preliminary design and constraint analysis completed by EEC with positive outcome</li><li data-it>Negoziazioni avanzate con proprietari terrieri &mdash; pronti alla firma delle opzioni</li><li data-en>Advanced negotiations with landowners &mdash; ready to sign options</li><li class="warn" data-it>STMG e P.A.S. non ancora avviati &mdash; target completamento 12 mesi</li><li class="warn" data-en>STMG and P.A.S. not yet started &mdash; 12-month completion target</li><li class="warn" data-it>P.A.S. (SCIA): iter semplificato, pubblicazione G.U.R.S. prevista entro fine 2026</li><li class="warn" data-en>P.A.S. (SCIA): simplified route, G.U.R.S. publication expected by end 2026</li></ul></div>
+      <div class="pcol"><div class="coltit">Timeframe</div><div class="tlist"><div class="ti"><div class="tdot done"></div><div><div class="tdate">Completato / Completed</div><div class="tlabel" data-it>Progetto preliminare &amp; analisi vincoli</div><div class="tlabel" data-en>Preliminary design &amp; constraint analysis</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Apr &ndash; Mag 2026</div><div class="tlabel" data-it>Opzioni terreno &amp; filing STMG/TICA</div><div class="tlabel" data-en>Land options &amp; STMG/TICA filing</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Lug 2026</div><div class="tlabel" data-it>STMG rilasciata / Preliminare notarile</div><div class="tlabel" data-en>STMG released / Notarised preliminary</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Set &ndash; Ott 2026</div><div class="tlabel" data-it>Deposito P.A.S. (SCIA)</div><div class="tlabel" data-en>P.A.S. filing (SCIA)</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Nov &ndash; Dic 2026</div><div class="tlabel" data-it>Pubblicazione G.U.R.S.</div><div class="tlabel" data-en>G.U.R.S. publication</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Feb &ndash; Mar 2027</div><div class="tlabel" data-it>RTB &mdash; Notice to Proceed</div><div class="tlabel" data-en>RTB &mdash; Notice to Proceed</div></div></div></div></div>
+    </div>
+    <div class="pcfoot">
+      <p data-it><strong>Documenti:</strong> Information Memorandum, Analisi Vincolistica, Progetto Preliminare</p>
+      <p data-en><strong>Documents:</strong> Information Memorandum, Constraint Analysis, Preliminary Design</p>
+      <a href="#contact" class="btn-p" data-it>Richiedi Accesso Data Room &rarr;</a>
+      <a href="#contact" class="btn-p" data-en>Request Data Room Access &rarr;</a>
+    </div>
+  </div>
+  <div class="pcard fade-up">
+    <div class="pchero">
+      <div class="pbadge" data-it>&#9679; Disponibile per Co-Sviluppo</div><div class="pbadge" data-en>&#9679; Available for Co-Development</div>
+      <div class="pname">Licodia 6</div>
+      <div class="psub">Licodia Eubea (CT) &mdash; Sicilia &nbsp;|&nbsp; Agro-PV Avanzato &nbsp;|&nbsp; P.A.S. &nbsp;|&nbsp; Cod. 2026_002</div>
+      <div class="pkpis"><div><div class="kv">5.63</div><div class="kl" data-it>MWp DC</div></div><div><div class="kv">5.28</div><div class="kl" data-it>MWp AC</div></div><div><div class="kv">Q1 2027</div><div class="kl" data-it>RTB target</div></div><div><div class="kv">P.A.S.</div><div class="kl" data-it>Iter permitting</div><div class="kl" data-en>Permitting route</div></div></div>
+    </div>
+    <div class="pcbody">
+      <div class="pcol"><div class="coltit" data-it>Descrizione</div><div class="coltit" data-en>Overview</div><ul class="ckl"><li data-it>Agro-PV Avanzato con moduli bifacciali su single-axis tracker, strutture a 2.2 m (D.Lgs. 1/2012)</li><li data-en>Advanced Agro-PV with bifacial modules on single-axis trackers, 2.2 m structures (D.Lgs. 1/2012)</li><li data-it>Comune di Licodia (CT), area ad alto irraggiamento solare in Sicilia</li><li data-en>Municipality of Licodia (CT), high solar irradiation area in Sicily</li><li data-it>Iter P.A.S./SCIA &mdash; procedura semplificata per impianti agrovoltaici &lt;10 MWp</li><li data-en>P.A.S./SCIA simplified permitting route for agrovoltaic plants under 10 MWp</li><li data-it>Connessione MT prevista &mdash; costo stimato &lt;&euro;70.000/MW</li><li data-en>MV grid connection planned &mdash; estimated cost &lt;&euro;70,000/MW</li></ul></div>
+      <div class="pcol"><div class="coltit" data-it>&#10003; Vincoli &amp; Terreni</div><div class="coltit" data-en>&#10003; Constraints &amp; Land</div><ul class="ckl"><li data-it>Analisi vincolistica completata: <strong>terreno privo di vincoli</strong> ostativi al permitting</li><li data-en>Constraint analysis completed: <strong>land free of obstacles</strong> to permitting</li><li data-it>Accordi preliminari con proprietari in fase di definizione</li><li data-en>Preliminary agreements with landowners being finalised</li><li data-it>Opzione onerosa &euro;1.000/ha/anno fino a STMG, poi preliminare notarile</li><li data-en>Paid option &euro;1,000/ha/year until STMG, then notarised preliminary</li><li data-it>Diritto di superficie 30+10 anni; acquisto alternativo ~&euro;30.000&ndash;40.000/ha</li><li data-en>Surface rights 30+10 years; purchase alternative ~&euro;30,000&ndash;40,000/ha</li></ul></div>
+      <div class="pcol"><div class="coltit" data-it>Stato Attuale</div><div class="coltit" data-en>Current Status</div><ul class="ckl"><li data-it>Analisi di fattibilit&agrave; e vincolistica completata da EEC</li><li data-en>Feasibility and constraint analysis completed by EEC</li><li data-it>SPV dedicata dell&rsquo;investitore &mdash; diritti registrati a nome SPV</li><li data-en>Investor's dedicated SPV &mdash; rights registered in SPV name</li><li class="warn" data-it>Richiesta TICA/STMG non ancora presentata &mdash; prossimo passo post-accordo</li><li class="warn" data-en>TICA/STMG request not yet filed &mdash; next step post-agreement</li><li class="warn" data-it>P.A.S. non avviato &mdash; target pubblicazione G.U.R.S. entro fine 2026</li><li class="warn" data-en>P.A.S. not started &mdash; G.U.R.S. publication target by end 2026</li></ul></div>
+      <div class="pcol"><div class="coltit">Timeframe</div><div class="tlist"><div class="ti"><div class="tdot done"></div><div><div class="tdate">Completato / Completed</div><div class="tlabel" data-it>Progetto preliminare &amp; analisi vincoli</div><div class="tlabel" data-en>Preliminary design &amp; constraint analysis</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Apr &ndash; Mag 2026</div><div class="tlabel" data-it>Opzioni terreno &amp; filing STMG/TICA</div><div class="tlabel" data-en>Land options &amp; STMG/TICA filing</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Lug 2026</div><div class="tlabel" data-it>STMG rilasciata / Preliminare notarile</div><div class="tlabel" data-en>STMG released / Notarised preliminary</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Set &ndash; Ott 2026</div><div class="tlabel" data-it>Deposito P.A.S. (SCIA)</div><div class="tlabel" data-en>P.A.S. filing (SCIA)</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Nov &ndash; Dic 2026</div><div class="tlabel" data-it>Pubblicazione G.U.R.S.</div><div class="tlabel" data-en>G.U.R.S. publication</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Feb &ndash; Mar 2027</div><div class="tlabel" data-it>RTB &mdash; Notice to Proceed</div><div class="tlabel" data-en>RTB &mdash; Notice to Proceed</div></div></div></div></div>
+    </div>
+    <div class="pcfoot">
+      <p data-it><strong>Documenti:</strong> Information Memorandum, Analisi Vincolistica, Progetto Preliminare</p>
+      <p data-en><strong>Documents:</strong> Information Memorandum, Constraint Analysis, Preliminary Design</p>
+      <a href="#contact" class="btn-p" data-it>Richiedi Accesso Data Room &rarr;</a>
+      <a href="#contact" class="btn-p" data-en>Request Data Room Access &rarr;</a>
+    </div>
+  </div>
+  <div class="pcard fade-up">
+    <div class="pchero">
+      <div class="pbadge" data-it>&#9679; Disponibile per Co-Sviluppo</div><div class="pbadge" data-en>&#9679; Available for Co-Development</div>
+      <div class="pname">Vizzini 5</div>
+      <div class="psub">Vizzini (CT) &mdash; Sicilia &nbsp;|&nbsp; Agro-PV Avanzato &nbsp;|&nbsp; P.A.S. &nbsp;|&nbsp; Cod. 2026_003</div>
+      <div class="pkpis"><div><div class="kv">6.38</div><div class="kl" data-it>MWp DC</div></div><div><div class="kv">5.94</div><div class="kl" data-it>MWp AC</div></div><div><div class="kv">Q1 2027</div><div class="kl" data-it>RTB target</div></div><div><div class="kv">P.A.S.</div><div class="kl" data-it>Iter permitting</div><div class="kl" data-en>Permitting route</div></div></div>
+    </div>
+    <div class="pcbody">
+      <div class="pcol"><div class="coltit" data-it>Descrizione</div><div class="coltit" data-en>Overview</div><ul class="ckl"><li data-it>Agro-PV Avanzato con moduli bifacciali su single-axis tracker, strutture a 2.2 m (D.Lgs. 1/2012)</li><li data-en>Advanced Agro-PV with bifacial modules on single-axis trackers, 2.2 m structures (D.Lgs. 1/2012)</li><li data-it>Comune di Vizzini (CT), Sicilia &mdash; alta irradiazione solare, provincia di Catania</li><li data-en>Municipality of Vizzini (CT), Sicily &mdash; high solar irradiation, province of Catania</li><li data-it>Iter P.A.S./SCIA &mdash; procedura semplificata per impianti agrovoltaici &lt;10 MWp</li><li data-en>P.A.S./SCIA simplified permitting route for agrovoltaic plants under 10 MWp</li><li data-it>Connessione MT prevista &mdash; costo stimato &lt;&euro;70.000/MW</li><li data-en>MV grid connection planned &mdash; estimated cost &lt;&euro;70,000/MW</li></ul></div>
+      <div class="pcol"><div class="coltit" data-it>&#10003; Vincoli &amp; Terreni</div><div class="coltit" data-en>&#10003; Constraints &amp; Land</div><ul class="ckl"><li data-it>Analisi vincolistica completata: <strong>terreno privo di vincoli</strong> ostativi al permitting</li><li data-en>Constraint analysis completed: <strong>land free of obstacles</strong> to permitting</li><li data-it>Terreno agricolo in provincia di Catania &mdash; accordi preliminari in definizione</li><li data-en>Agricultural land in Catania province &mdash; preliminary agreements being finalised</li><li data-it>Opzione onerosa &euro;1.000/ha/anno fino a STMG, poi preliminare notarile</li><li data-en>Paid option &euro;1,000/ha/year until STMG, then notarised preliminary</li><li data-it>Diritto di superficie 30+10 anni; acquisto alternativo ~&euro;30.000&ndash;40.000/ha</li><li data-en>Surface rights 30+10 years; purchase alternative ~&euro;30,000&ndash;40,000/ha</li></ul></div>
+      <div class="pcol"><div class="coltit" data-it>Stato Attuale</div><div class="coltit" data-en>Current Status</div><ul class="ckl"><li data-it>Analisi di fattibilit&agrave; e vincolistica completata da EEC</li><li data-en>Feasibility and constraint analysis completed by EEC</li><li data-it>SPV dedicata dell&rsquo;investitore &mdash; diritti registrati a nome SPV</li><li data-en>Investor's dedicated SPV &mdash; rights registered in SPV name</li><li class="warn" data-it>Richiesta TICA/STMG non ancora presentata &mdash; prossimo passo post-accordo</li><li class="warn" data-en>TICA/STMG request not yet filed &mdash; next step post-agreement</li><li class="warn" data-it>P.A.S. non avviato &mdash; target pubblicazione G.U.R.S. entro fine 2026</li><li class="warn" data-en>P.A.S. not started &mdash; G.U.R.S. publication target by end 2026</li></ul></div>
+      <div class="pcol"><div class="coltit">Timeframe</div><div class="tlist"><div class="ti"><div class="tdot done"></div><div><div class="tdate">Completato / Completed</div><div class="tlabel" data-it>Progetto preliminare &amp; analisi vincoli</div><div class="tlabel" data-en>Preliminary design &amp; constraint analysis</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Apr &ndash; Mag 2026</div><div class="tlabel" data-it>Opzioni terreno &amp; filing STMG/TICA</div><div class="tlabel" data-en>Land options &amp; STMG/TICA filing</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Lug 2026</div><div class="tlabel" data-it>STMG rilasciata / Preliminare notarile</div><div class="tlabel" data-en>STMG released / Notarised preliminary</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Set &ndash; Ott 2026</div><div class="tlabel" data-it>Deposito P.A.S. (SCIA)</div><div class="tlabel" data-en>P.A.S. filing (SCIA)</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Nov &ndash; Dic 2026</div><div class="tlabel" data-it>Pubblicazione G.U.R.S.</div><div class="tlabel" data-en>G.U.R.S. publication</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Feb &ndash; Mar 2027</div><div class="tlabel" data-it>RTB &mdash; Notice to Proceed</div><div class="tlabel" data-en>RTB &mdash; Notice to Proceed</div></div></div></div></div>
+    </div>
+    <div class="pcfoot">
+      <p data-it><strong>Documenti:</strong> Information Memorandum, Analisi Vincolistica, Progetto Preliminare</p>
+      <p data-en><strong>Documents:</strong> Information Memorandum, Constraint Analysis, Preliminary Design</p>
+      <a href="#contact" class="btn-p" data-it>Richiedi Accesso Data Room &rarr;</a>
+      <a href="#contact" class="btn-p" data-en>Request Data Room Access &rarr;</a>
+    </div>
+  </div>
+  <div class="pcard fade-up">
+    <div class="pchero">
+      <div class="pbadge" data-it>&#9679; Disponibile per Co-Sviluppo</div><div class="pbadge" data-en>&#9679; Available for Co-Development</div>
+      <div class="pname">Vizzini 6</div>
+      <div class="psub">Vizzini (CT) &mdash; Sicilia &nbsp;|&nbsp; Agro-PV Avanzato &nbsp;|&nbsp; P.A.S. &nbsp;|&nbsp; Cod. 2026_004</div>
+      <div class="pkpis"><div><div class="kv">6.38</div><div class="kl" data-it>MWp DC</div></div><div><div class="kv">5.94</div><div class="kl" data-it>MWp AC</div></div><div><div class="kv">Q1 2027</div><div class="kl" data-it>RTB target</div></div><div><div class="kv">P.A.S.</div><div class="kl" data-it>Iter permitting</div><div class="kl" data-en>Permitting route</div></div></div>
+    </div>
+    <div class="pcbody">
+      <div class="pcol"><div class="coltit" data-it>Descrizione</div><div class="coltit" data-en>Overview</div><ul class="ckl"><li data-it>Agro-PV Avanzato con moduli bifacciali su single-axis tracker, strutture a 2.2 m (D.Lgs. 1/2012)</li><li data-en>Advanced Agro-PV with bifacial modules on single-axis trackers, 2.2 m structures (D.Lgs. 1/2012)</li><li data-it>Comune di Vizzini (CT), Sicilia &mdash; alta irradiazione solare, provincia di Catania</li><li data-en>Municipality of Vizzini (CT), Sicily &mdash; high solar irradiation, province of Catania</li><li data-it>Iter P.A.S./SCIA &mdash; procedura semplificata per impianti agrovoltaici &lt;10 MWp</li><li data-en>P.A.S./SCIA simplified permitting route for agrovoltaic plants under 10 MWp</li><li data-it>Connessione MT prevista &mdash; costo stimato &lt;&euro;70.000/MW</li><li data-en>MV grid connection planned &mdash; estimated cost &lt;&euro;70,000/MW</li></ul></div>
+      <div class="pcol"><div class="coltit" data-it>&#10003; Vincoli &amp; Terreni</div><div class="coltit" data-en>&#10003; Constraints &amp; Land</div><ul class="ckl"><li data-it>Analisi vincolistica completata: <strong>terreno privo di vincoli</strong> ostativi al permitting</li><li data-en>Constraint analysis completed: <strong>land free of obstacles</strong> to permitting</li><li data-it>Terreno agricolo in provincia di Catania &mdash; accordi preliminari in definizione</li><li data-en>Agricultural land in Catania province &mdash; preliminary agreements being finalised</li><li data-it>Opzione onerosa &euro;1.000/ha/anno fino a STMG, poi preliminare notarile</li><li data-en>Paid option &euro;1,000/ha/year until STMG, then notarised preliminary</li><li data-it>Diritto di superficie 30+10 anni; acquisto alternativo ~&euro;30.000&ndash;40.000/ha</li><li data-en>Surface rights 30+10 years; purchase alternative ~&euro;30,000&ndash;40,000/ha</li></ul></div>
+      <div class="pcol"><div class="coltit" data-it>Stato Attuale</div><div class="coltit" data-en>Current Status</div><ul class="ckl"><li data-it>Analisi di fattibilit&agrave; e vincolistica completata da EEC</li><li data-en>Feasibility and constraint analysis completed by EEC</li><li data-it>SPV dedicata dell&rsquo;investitore &mdash; diritti registrati a nome SPV</li><li data-en>Investor's dedicated SPV &mdash; rights registered in SPV name</li><li class="warn" data-it>Richiesta TICA/STMG non ancora presentata &mdash; prossimo passo post-accordo</li><li class="warn" data-en>TICA/STMG request not yet filed &mdash; next step post-agreement</li><li class="warn" data-it>P.A.S. non avviato &mdash; target pubblicazione G.U.R.S. entro fine 2026</li><li class="warn" data-en>P.A.S. not started &mdash; G.U.R.S. publication target by end 2026</li></ul></div>
+      <div class="pcol"><div class="coltit">Timeframe</div><div class="tlist"><div class="ti"><div class="tdot done"></div><div><div class="tdate">Completato / Completed</div><div class="tlabel" data-it>Progetto preliminare &amp; analisi vincoli</div><div class="tlabel" data-en>Preliminary design &amp; constraint analysis</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Apr &ndash; Mag 2026</div><div class="tlabel" data-it>Opzioni terreno &amp; filing STMG/TICA</div><div class="tlabel" data-en>Land options &amp; STMG/TICA filing</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Lug 2026</div><div class="tlabel" data-it>STMG rilasciata / Preliminare notarile</div><div class="tlabel" data-en>STMG released / Notarised preliminary</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Set &ndash; Ott 2026</div><div class="tlabel" data-it>Deposito P.A.S. (SCIA)</div><div class="tlabel" data-en>P.A.S. filing (SCIA)</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Nov &ndash; Dic 2026</div><div class="tlabel" data-it>Pubblicazione G.U.R.S.</div><div class="tlabel" data-en>G.U.R.S. publication</div></div></div><div class="ti"><div class="tdot"></div><div><div class="tdate">Feb &ndash; Mar 2027</div><div class="tlabel" data-it>RTB &mdash; Notice to Proceed</div><div class="tlabel" data-en>RTB &mdash; Notice to Proceed</div></div></div></div></div>
+    </div>
+    <div class="pcfoot">
+      <p data-it><strong>Documenti:</strong> Information Memorandum, Analisi Vincolistica, Progetto Preliminare</p>
+      <p data-en><strong>Documents:</strong> Information Memorandum, Constraint Analysis, Preliminary Design</p>
+      <a href="#contact" class="btn-p" data-it>Richiedi Accesso Data Room &rarr;</a>
+      <a href="#contact" class="btn-p" data-en>Request Data Room Access &rarr;</a>
+    </div>
+  </div>
+  <div class="csg">
+    <div class="csc"><div class="ci">&#9728;&#65039;</div><h4>VIZ 3 / VIZ 4 &mdash; Sicilia</h4><p data-it>11.26 MWp &middot; Pipeline in sviluppo</p><p data-en>11.26 MWp &middot; Development pipeline</p></div>
+    <div class="csc"><div class="ci">&#9728;&#65039;</div><h4>SEN 1-6 &mdash; Sardegna</h4><p data-it>~31 MWp &middot; In sviluppo Q4 2026</p><p data-en>~31 MWp &middot; In development Q4 2026</p></div>
+    <div class="csc"><div class="ci">&#128290;</div><h4 data-it>Pipeline Totale EEC</h4><h4 data-en>EEC Total Pipeline</h4><p data-it><strong>~100 MWp</strong> in Italia entro 2027</p><p data-en><strong>~100 MWp</strong> in Italy by 2027</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="cg">
+    <div>
+      <div class="stag" data-it>Parliamo</div><div class="stag" data-en>Get in Touch</div>
+      <h2 class="stit fade-up" data-it>Contattaci</h2><h2 class="stit fade-up" data-en>Contact Us</h2>
+      <p class="slead fade-up d1" style="margin-bottom:2.5rem" data-it>Hai un progetto, vuoi esplorare una partnership o richiedere accesso alla data room?</p>
+      <p class="slead fade-up d1" style="margin-bottom:2.5rem" data-en>Have a project, want to explore a partnership or request data room access?</p>
+      <div class="ci-list fade-up d2">
+        <div class="cii"><div class="cicon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><h4>Email</h4><p><a href="mailto:info@eec-srl.it">info@eec-srl.it</a></p></div></div>
+        <div class="cii"><div class="cicon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.35 2 2 0 0 1 3.6 1.13h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.68a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><h4 data-it>Telefono</h4><h4 data-en>Phone</h4><p><a href="tel:+393518095670">+39 351 809 5670</a></p></div></div>
+        <div class="cii"><div class="cicon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8960A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><h4 data-it>Sede</h4><h4 data-en>Office</h4><p>Via Ghibellina, 91 &mdash; Messina, Italia</p></div></div>
+      </div>
+    </div>
+    <form class="cf fade-up d1" onsubmit="handleSubmit(event)">
+      <div class="fr">
+        <div class="ff"><label data-it>Nome</label><label data-en>First Name</label><input type="text" placeholder="Mario" required></div>
+        <div class="ff"><label data-it>Cognome</label><label data-en>Last Name</label><input type="text" placeholder="Rossi" required></div>
+      </div>
+      <div class="ff"><label>Email</label><input type="email" placeholder="mario.rossi@example.com" required></div>
+      <div class="ff"><label data-it>Oggetto</label><label data-en>Subject</label><input type="text" id="subj-input" placeholder="Sviluppo progetto / Data room..."></div>
+      <div class="ff"><label data-it>Messaggio</label><label data-en>Message</label><textarea id="msg-input" rows="5" placeholder="Descrivi il tuo progetto..."></textarea></div>
+      <button type="submit" class="btn-p" id="submit-btn"><span data-it>Invia Messaggio</span><span data-en>Send Message</span> &rarr;</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <a href="#hero" class="flogo"><img src="ECC_Logo.jpg" alt="EEC srl"></a>
+    <p>&copy; 2025 Energy Engineering Consulting S.r.l.</p>
+    <p>Via Ghibellina, 91 &mdash; Messina, Italia</p>
+    <p>info@eec-srl.it &nbsp;|&nbsp; +39 351 809 5670</p>
+  </div>
+  <nav>
+    <a href="#hero" data-it>Home</a><a href="#hero" data-en>Home</a>
+    <a href="#about" data-it>Chi Siamo</a><a href="#about" data-en>About</a>
+    <a href="#services" data-it>Servizi</a><a href="#services" data-en>Services</a>
+    <a href="#projects" data-it>Progetti</a><a href="#projects" data-en>Projects</a>
+    <a href="#team">Team</a>
+    <a href="#opportunities" data-it>Opportunit&agrave;</a><a href="#opportunities" data-en>Opportunities</a>
+    <a href="#contact" data-it>Contatti</a><a href="#contact" data-en>Contact</a>
+  </nav>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.body.className = "lang-" + lang;
+  document.documentElement.lang = lang;
+  ["it","en"].forEach(function(l) {
+    var b = document.getElementById("btn-" + l);
+    if (b) b.className = "tb-btn" + (l === lang ? " active" : "");
+  });
+}
+var ham = document.getElementById("hamburger");
+var mob = document.getElementById("mobile-menu");
+ham.addEventListener("click", function() {
+  var o = mob.classList.toggle("open");
+  ham.classList.toggle("open", o);
+  document.body.style.overflow = o ? "hidden" : "";
+});
+function closeMobile() {
+  mob.classList.remove("open");
+  ham.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", function(e) { if (e.key === "Escape") closeMobile(); });
+var navbar = document.getElementById("navbar");
+var secs = ["hero","about","services","projects","team","opportunities","contact"];
+var links = document.querySelectorAll(".nav-links a[data-section]");
+function setActive(id) { links.forEach(function(a) { a.classList.toggle("active", a.dataset.section === id); }); }
+window.addEventListener("scroll", function() {
+  navbar.classList.toggle("scrolled", window.scrollY > 40);
+  var cur = "hero";
+  secs.forEach(function(id) { var el = document.getElementById(id); if (el && window.scrollY >= el.offsetTop - 130) cur = id; });
+  setActive(cur);
+}, {passive: true});
+var fo = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, {threshold: 0.1});
+document.querySelectorAll(".fade-up").forEach(function(el) { fo.observe(el); });
+function handleSubmit(e) {
+  e.preventDefault();
+  var btn = document.getElementById("submit-btn");
+  var isIt = document.body.classList.contains("lang-it");
+  btn.style.background = "#1DB385";
+  btn.textContent = isIt ? "Messaggio inviato!" : "Message sent!";
+  setTimeout(function() {
+    btn.style.background = "";
+    btn.innerHTML = "<span data-" + (isIt ? "it" : "en") + ">" + (isIt ? "Invia Messaggio" : "Send Message") + "</span> &rarr;";
+  }, 3500);
+}
+setLang("it");
+</script>
+</body>
+</html>
