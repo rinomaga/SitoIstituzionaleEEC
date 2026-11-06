@@ -264,8 +264,8 @@ body.lang-it [data-en]{display:none!important}
   </div>
   <div class="hstats">
     <div class="sb"><div class="sn">20+</div><div class="sl" data-it>Anni Esperienza</div><div class="sl" data-en>Years Experience</div></div>
-    <div class="sb"><div class="sn">73.9</div><div class="sl">MWp Pipeline DC</div></div>
-    <div class="sb"><div class="sn">12</div><div class="sl" data-it>Progetti Attivi</div><div class="sl" data-en>Active Projects</div></div>
+    <div class="sb"><div class="sn" id="hero-dc">73.9</div><div class="sl">MWp Pipeline DC</div></div>
+    <div class="sb"><div class="sn" id="hero-count">12</div><div class="sl" data-it>Progetti Attivi</div><div class="sl" data-en>Active Projects</div></div>
     <div class="sb"><div class="sn">360&deg;</div><div class="sl" data-it>Servizi</div><div class="sl" data-en>Services</div></div>
   </div>
 </section>
@@ -326,23 +326,23 @@ body.lang-it [data-en]{display:none!important}
     <p class="slead" style="max-width:380px" data-en>Portfolio of solar projects in Sicily and Sardinia.</p>
   </div>
   <div class="tw fade-up"><table>
-    <thead><tr><th>#</th><th data-it>Progetto</th><th data-en>Project</th><th>DC MWp</th><th>AC MWp</th><th data-it>Regione</th><th data-en>Region</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>VIZ 1</td><td>6.38</td><td>5.94</td><td>Sicilia</td><td><span class="brtb">RTB</span></td></tr>
-      <tr><td>2</td><td>VIZ 2</td><td>8.52</td><td>7.92</td><td>Sicilia</td><td><span class="brtb">RTB</span></td></tr>
-      <tr><td>3</td><td>SEN 1</td><td>3.56</td><td>3.30</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>4</td><td>SEN 2</td><td>7.95</td><td>7.59</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>5</td><td>SEN 3</td><td>3.64</td><td>3.30</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>6</td><td>SEN 4</td><td>3.49</td><td>3.30</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>7</td><td>SEN 5</td><td>6.34</td><td>5.94</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>8</td><td>SEN 6</td><td>5.93</td><td>6.61</td><td>Sardegna</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>9</td><td>LIC 1</td><td>9.83</td><td>9.57</td><td>Sicilia</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>10</td><td>VIZ 3</td><td>7.58</td><td>7.26</td><td>Sicilia</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>11</td><td>VIZ 4</td><td>3.68</td><td>3.30</td><td>Sicilia</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
-      <tr><td>12</td><td>LIC 2</td><td>6.90</td><td>6.60</td><td>Sicilia</td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+    <thead><tr><th>#</th><th data-it>Progetto</th><th data-en>Project</th><th>DC MWp</th><th>AC MWp</th><th>BESS</th><th data-it>Regione</th><th data-en>Region</th><th>Status</th></tr></thead>
+    <tbody id="projects-tbody">
+      <tr><td>1</td><td>VIZ 1</td><td>6.38</td><td>5.94</td><td>0</td><td><span data-it>Sicilia</span><span data-en>Sicily</span></td><td><span class="brtb">RTB</span></td></tr>
+      <tr><td>2</td><td>VIZ 2</td><td>8.52</td><td>7.92</td><td>0</td><td><span data-it>Sicilia</span><span data-en>Sicily</span></td><td><span class="brtb">RTB</span></td></tr>
+      <tr><td>3</td><td>SEN 1</td><td>3.56</td><td>3.30</td><td>0</td><td><span data-it>Sardegna</span><span data-en>Sardinia</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>4</td><td>SEN 2</td><td>7.95</td><td>7.59</td><td>0</td><td><span data-it>Sardegna</span><span data-en>Sardinia</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>5</td><td>SEN 3</td><td>3.64</td><td>3.30</td><td>0</td><td><span data-it>Sardegna</span><span data-en>Sardinia</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>6</td><td>SEN 4</td><td>3.49</td><td>3.30</td><td>0</td><td><span data-it>Sardegna</span><span data-en>Sardinia</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>7</td><td>SEN 5</td><td>6.34</td><td>5.94</td><td>0</td><td><span data-it>Sardegna</span><span data-en>Sardinia</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>8</td><td>SEN 6</td><td>5.93</td><td>6.61</td><td>0</td><td><span data-it>Sardegna</span><span data-en>Sardinia</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>9</td><td>LIC 1</td><td>9.83</td><td>9.57</td><td>0</td><td><span data-it>Sicilia</span><span data-en>Sicily</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>10</td><td>VIZ 3</td><td>7.58</td><td>7.26</td><td>0</td><td><span data-it>Sicilia</span><span data-en>Sicily</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>11</td><td>VIZ 4</td><td>3.68</td><td>3.30</td><td>0</td><td><span data-it>Sicilia</span><span data-en>Sicily</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
+      <tr><td>12</td><td>LIC 2</td><td>6.90</td><td>6.60</td><td>0</td><td><span data-it>Sicilia</span><span data-en>Sicily</span></td><td><span class="bprog" data-it>In sviluppo Q4 2026</span><span class="bprog" data-en>In progress Q4 2026</span></td></tr>
     </tbody>
   </table></div>
-  <div class="ptot"><span data-it>Totale: </span><span data-en>Total: </span><strong>73.9 MWp DC</strong></div>
+  <div class="ptot"><span data-it>Totale: </span><span data-en>Total: </span><strong id="projects-total">73.9 MWp DC</strong></div>
 </section>
 
 <section id="team">
@@ -500,6 +500,7 @@ body.lang-it [data-en]{display:none!important}
     <a href="#team">Team</a>
     <a href="#opportunities" data-it>Opportunit&agrave;</a><a href="#opportunities" data-en>Opportunities</a>
     <a href="#contact" data-it>Contatti</a><a href="#contact" data-en>Contact</a>
+    <a href="admin.html" style="opacity:.6">Admin</a>
   </nav>
 </footer>
 
@@ -550,7 +551,65 @@ function handleSubmit(e) {
     btn.innerHTML = "<span data-" + (isIt ? "it" : "en") + ">" + (isIt ? "Invia Messaggio" : "Send Message") + "</span> &rarr;";
   }, 3500);
 }
+function escHtml(str) {
+  return String(str == null ? "" : str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+function fmtNum(val, decimals) {
+  var n = Number(val || 0);
+  if (decimals === 0 || n === 0) return String(n);
+  return n.toFixed(decimals != null ? decimals : 2);
+}
+function loadProjectsFromDb() {
+  fetch("/api/projects", { cache: "no-store" })
+    .then(function(res) { return res.ok ? res.json() : null; })
+    .then(function(payload) {
+      var list = payload && Array.isArray(payload.projects) ? payload.projects : (Array.isArray(payload) ? payload : null);
+      if (!list || !list.length) return;
+      var tbody = document.getElementById("projects-tbody");
+      if (!tbody) return;
+      var totalDc = 0;
+      var totalBess = 0;
+      var html = list.map(function(p, idx) {
+        var dc = Number(p.dc_mwp || 0);
+        var ac = Number(p.ac_mwp || 0);
+        var bess = Number(p.bess || 0);
+        totalDc += dc;
+        totalBess += bess;
+        var regIt = escHtml(p.region_it || "Sicilia");
+        var regEn = escHtml(p.region_en || (p.region_it === "Sardegna" ? "Sardinia" : "Sicily"));
+        var statusHtml = p.status_type === "rtb"
+          ? '<span class="brtb">' + escHtml(p.status_it || "RTB") + '</span>'
+          : '<span class="bprog" data-it>' + escHtml(p.status_it || "In sviluppo Q4 2026") + '</span><span class="bprog" data-en>' + escHtml(p.status_en || "In progress Q4 2026") + '</span>';
+        return "<tr>" +
+          "<td>" + (idx + 1) + "</td>" +
+          "<td>" + escHtml(p.name) + "</td>" +
+          "<td>" + fmtNum(dc, 2) + "</td>" +
+          "<td>" + fmtNum(ac, 2) + "</td>" +
+          "<td>" + (bess === 0 ? "0" : fmtNum(bess, 2)) + "</td>" +
+          "<td><span data-it>" + regIt + "</span><span data-en>" + regEn + "</span></td>" +
+          "<td>" + statusHtml + "</td>" +
+          "</tr>";
+      }).join("");
+      tbody.innerHTML = html;
+      var totEl = document.getElementById("projects-total");
+      if (totEl) {
+        var totText = totalDc.toFixed(1) + " MWp DC";
+        if (totalBess > 0) totText += " | " + totalBess.toFixed(1) + " BESS";
+        totEl.textContent = totText;
+      }
+      var heroDc = document.getElementById("hero-dc");
+      if (heroDc) heroDc.textContent = totalDc.toFixed(1);
+      var heroCount = document.getElementById("hero-count");
+      if (heroCount) heroCount.textContent = String(list.length);
+    })
+    .catch(function() {});
+}
 setLang("it");
+loadProjectsFromDb();
 </script>
 </body>
 </html>

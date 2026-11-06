@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Progetti – EEC srl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--sun:#E8960A;--sun2:#FBB034;--sun3:#FEF3DC;--navy:#0D2545;--navy2:#163358;--slate:#3A5577;--light:#9BB5CE;--pale:#EDF3F9;--white:#FFFFFF;--gray:#F4F7FB;--text:#1A2E45;--text2:#3D5470;--muted:#7A95AE;--green:#1DB385;--danger:#E03E3E;--r:10px;--sh:0 4px 24px rgba(13,37,69,.08);--sh2:0 12px 48px rgba(13,37,69,.14);--t:.25s cubic-bezier(.4,0,.2,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--gray);color:var(--text);min-height:100vh;line-height:1.5}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+header{background:var(--navy);color:#fff;padding:1rem clamp(1.5rem,5vw,4rem);display:flex;align-items:center;justify-content:space-between;gap:1rem;box-shadow:0 2px 20px rgba(13,37,69,.25)}
+.h-left{display:flex;align-items:center;gap:1rem}
+.h-logo{background:#fff;border-radius:6px;padding:3px 8px;display:flex;align-items:center;text-decoration:none}
+.h-logo img{height:36px;width:auto}
+.h-title{font-size:1.15rem;font-weight:700;letter-spacing:-.01em}
+.h-sub{font-size:.78rem;color:var(--light)}
+.h-actions{display:flex;align-items:center;gap:.8rem}
+
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;padding:.65rem 1.3rem;border-radius:8px;border:none;cursor:pointer;text-decoration:none;transition:all var(--t)}
+.btn-p{background:var(--sun);color:#fff;box-shadow:0 4px 12px rgba(232,150,10,.3)}
+.btn-p:hover{background:#d4870a;transform:translateY(-1px)}
+.btn-o{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+.btn-o:hover{background:rgba(255,255,255,.2)}
+.btn-g{background:var(--pale);color:var(--navy)}
+.btn-g:hover{background:#dce7f3}
+.btn-d{background:rgba(224,62,62,.12);color:var(--danger)}
+.btn-d:hover{background:var(--danger);color:#fff}
+.btn-sm{padding:.4rem .75rem;font-size:.72rem;border-radius:6px}
+
+main{max-width:1280px;margin:2.2rem auto;padding:0 clamp(1rem,4vw,2.5rem)}
+
+/* Login Card */
+#login-view{max-width:440px;margin:5rem auto;background:#fff;border-radius:14px;padding:2.5rem;box-shadow:var(--sh2);border:1.5px solid var(--pale)}
+#login-view h2{color:var(--navy);font-size:1.5rem;margin-bottom:.4rem}
+#login-view p{color:var(--text2);font-size:.9rem;margin-bottom:1.6rem}
+
+/* Dashboard */
+#admin-view{display:none}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.2rem;margin-bottom:2rem}
+.kpi{background:#fff;border-radius:12px;padding:1.3rem 1.5rem;box-shadow:var(--sh);border-left:4px solid var(--sun)}
+.kpi-val{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;color:var(--navy);line-height:1.1}
+.kpi-lbl{font-size:.73rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:.3rem}
+
+.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.2rem}
+.toolbar h2{font-size:1.4rem;color:var(--navy)}
+.storage-pill{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:600;padding:.3rem .8rem;border-radius:100px;background:var(--sun3);color:var(--sun)}
+
+.card{background:#fff;border-radius:14px;box-shadow:var(--sh);border:1.5px solid var(--pale);overflow:hidden}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+thead tr{background:var(--navy);color:#fff}
+th{font-family:'Syne',sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sun2);padding:1rem 1.2rem;text-align:left;white-space:nowrap}
+td{padding:.9rem 1.2rem;border-bottom:1px solid var(--pale);color:var(--text);vertical-align:middle}
+tbody tr:hover{background:var(--gray)}
+tbody tr:last-child td{border-bottom:none}
+
+.brtb{display:inline-block;padding:.25rem .75rem;border-radius:100px;font-size:.72rem;font-weight:700;background:rgba(29,179,133,.15);color:#148f68}
+.bprog{display:inline-block;padding:.25rem .75rem;border-radius:100px;font-size:.72rem;font-weight:600;background:var(--sun3);color:#b87300}
+.act-btns{display:flex;align-items:center;gap:.4rem;white-space:nowrap}
+
+/* Modal */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(13,37,69,.6);z-index:2000;align-items:center;justify-content:center;padding:1rem}
+.modal-backdrop.open{display:flex}
+.modal{background:#fff;border-radius:14px;width:100%;max-width:600px;padding:2rem;box-shadow:var(--sh2);max-height:92vh;overflow-y:auto}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem;padding-bottom:.8rem;border-bottom:1px solid var(--pale)}
+.modal-head h3{font-size:1.25rem;color:var(--navy)}
+.close-x{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1}
+
+.fg-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.fg.full{grid-column:1 / -1}
+.fg label{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate)}
+.fg input,.fg select{background:var(--gray);border:1.5px solid var(--pale);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.94rem;padding:.75rem 1rem;border-radius:8px;outline:none;transition:border-color var(--t);width:100%}
+.fg input:focus,.fg select:focus{border-color:var(--sun);background:#fff}
+
+.alert{padding:.85rem 1.1rem;border-radius:8px;font-size:.86rem;margin-bottom:1rem;display:none}
+.alert.error{display:block;background:rgba(224,62,62,.1);color:var(--danger);border:1px solid rgba(224,62,62,.25)}
+.alert.success{display:block;background:rgba(29,179,133,.12);color:#117a58;border:1px solid rgba(29,179,133,.3)}
+
+@media(max-width:640px){
+  .fg-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <a href="index.html" class="h-logo"><img src="ECC_Logo.jpg" alt="EEC srl"></a>
+    <div>
+      <div class="h-title">Amministrazione Progetti</div>
+      <div class="h-sub">Gestione Pipeline Fotovoltaica &amp; BESS</div>
+    </div>
+  </div>
+  <div class="h-actions">
+    <a href="index.html#projects" class="btn btn-o">&larr; Vai al Sito Pubblico</a>
+    <button class="btn btn-o" id="logout-btn" style="display:none" onclick="logout()">Esci</button>
+  </div>
+</header>
+
+<main>
+  <!-- Login View -->
+  <div id="login-view">
+    <h2>Accesso Riservato</h2>
+    <p>Inserisci la password amministratore per modificare la lista dei progetti in sviluppo.</p>
+    <div id="login-alert" class="alert"></div>
+    <form onsubmit="handleLogin(event)">
+      <div class="fg">
+        <label for="admin-pwd">Password Amministratore</label>
+        <input type="password" id="admin-pwd" placeholder="Inserisci password..." required autofocus>
+      </div>
+      <button type="submit" class="btn btn-p" style="width:100%;justify-content:center">Accedi al Pannello &rarr;</button>
+    </form>
+  </div>
+
+  <!-- Admin Dashboard View -->
+  <div id="admin-view">
+    <div id="dash-alert" class="alert"></div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-val" id="kpi-count">0</div>
+        <div class="kpi-lbl">Progetti in Pipeline</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val" id="kpi-dc">0.00</div>
+        <div class="kpi-lbl">Totale DC (MWp)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val" id="kpi-ac">0.00</div>
+        <div class="kpi-lbl">Totale AC (MWp)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val" id="kpi-bess">0</div>
+        <div class="kpi-lbl">Totale BESS</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+        <h2>Tabella Progetti in Sviluppo</h2>
+        <span class="storage-pill" id="storage-badge">Database Cloud Attivo</span>
+      </div>
+      <button class="btn btn-p" onclick="openModal()">+ Nuovo Progetto</button>
+    </div>
+
+    <div class="card">
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Progetto</th>
+              <th>DC MWp</th>
+              <th>AC MWp</th>
+              <th>BESS</th>
+              <th>Regione (IT / EN)</th>
+              <th>Status</th>
+              <th style="text-align:right">Azioni</th>
+            </tr>
+          </thead>
+          <tbody id="admin-tbody">
+            <tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--muted)">Caricamento progetti in corso...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Modal Creazione / Modifica -->
+<div class="modal-backdrop" id="project-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Nuovo Progetto</h3>
+      <button class="close-x" onclick="closeModal()">&times;</button>
+    </div>
+    <form id="project-form" onsubmit="saveProject(event)">
+      <input type="hidden" id="f-id">
+      <div class="fg-grid">
+        <div class="fg">
+          <label for="f-position">Ordine (#)</label>
+          <input type="number" id="f-position" min="1" step="1" required>
+        </div>
+        <div class="fg">
+          <label for="f-name">Nome Progetto</label>
+          <input type="text" id="f-name" placeholder="es. VIZ 1" required>
+        </div>
+        <div class="fg">
+          <label for="f-dc">Potenza DC (MWp)</label>
+          <input type="number" id="f-dc" step="0.01" min="0" placeholder="6.38" required>
+        </div>
+        <div class="fg">
+          <label for="f-ac">Potenza AC (MWp)</label>
+          <input type="number" id="f-ac" step="0.01" min="0" placeholder="5.94" required>
+        </div>
+        <div class="fg">
+          <label for="f-bess">BESS</label>
+          <input type="number" id="f-bess" step="0.01" min="0" value="0" required>
+        </div>
+        <div class="fg">
+          <label for="f-status-type">Tipo Status</label>
+          <select id="f-status-type" onchange="syncStatusDefaults()">
+            <option value="rtb">RTB ( Verde - Ready to Build )</option>
+            <option value="prog">In sviluppo ( Arancione )</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label for="f-region-it">Regione (Italiano)</label>
+          <input type="text" id="f-region-it" placeholder="Sicilia" oninput="syncRegionEn()" required>
+        </div>
+        <div class="fg">
+          <label for="f-region-en">Region (Inglese)</label>
+          <input type="text" id="f-region-en" placeholder="Sicily" required>
+        </div>
+        <div class="fg">
+          <label for="f-status-it">Testo Status (Italiano)</label>
+          <input type="text" id="f-status-it" placeholder="In sviluppo Q4 2026" required>
+        </div>
+        <div class="fg">
+          <label for="f-status-en">Status Text (Inglese)</label>
+          <input type="text" id="f-status-en" placeholder="In progress Q4 2026" required>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:.8rem;margin-top:1rem">
+        <button type="button" class="btn btn-g" onclick="closeModal()">Annulla</button>
+        <button type="submit" class="btn btn-p" id="save-btn">Salva Progetto</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = "eec_admin_password";
+let projectsList = [];
+
+function getPassword() {
+  return sessionStorage.getItem(STORAGE_KEY) || "";
+}
+
+function showAlert(elId, msg, type) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!msg) {
+    el.className = "alert";
+    el.textContent = "";
+    return;
+  }
+  el.className = "alert " + (type || "error");
+  el.textContent = msg;
+  if (type === "success") {
+    setTimeout(() => {
+      if (el.textContent === msg) el.className = "alert";
+    }, 3500);
+  }
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const pwd = document.getElementById("admin-pwd").value.trim();
+  showAlert("login-alert", "");
+  try {
+    const res = await fetch("/api/projects?verify=1", {
+      headers: { "x-admin-password": pwd }
+    });
+    if (!res.ok) {
+      showAlert("login-alert", "Password non corretta. Riprova.", "error");
+      return;
+    }
+    sessionStorage.setItem(STORAGE_KEY, pwd);
+    enterAdmin();
+  } catch (err) {
+    showAlert("login-alert", "Errore di connessione all'API: " + err.message, "error");
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem(STORAGE_KEY);
+  document.getElementById("admin-view").style.display = "none";
+  document.getElementById("logout-btn").style.display = "none";
+  document.getElementById("login-view").style.display = "block";
+  document.getElementById("admin-pwd").value = "";
+}
+
+function enterAdmin() {
+  document.getElementById("login-view").style.display = "none";
+  document.getElementById("admin-view").style.display = "block";
+  document.getElementById("logout-btn").style.display = "inline-flex";
+  fetchProjects();
+}
+
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+async function fetchProjects() {
+  try {
+    const res = await fetch("/api/projects", { cache: "no-store" });
+    if (!res.ok) throw new Error("Impossibile caricare i progetti (HTTP " + res.status + ")");
+    const data = await res.json();
+    projectsList = Array.isArray(data.projects) ? data.projects : (Array.isArray(data) ? data : []);
+    const badge = document.getElementById("storage-badge");
+    if (badge && data.storage) {
+      badge.textContent = data.storage === "netlify-database"
+        ? "Database: Netlify Postgres"
+        : "Database: Netlify Cloud Store";
+    }
+    renderTable();
+  } catch (err) {
+    showAlert("dash-alert", err.message, "error");
+  }
+}
+
+function renderTable() {
+  const tbody = document.getElementById("admin-tbody");
+  let totDc = 0, totAc = 0, totBess = 0;
+
+  if (!projectsList.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--muted)">Nessun progetto presente. Clicca su "+ Nuovo Progetto" per aggiungerne uno.</td></tr>';
+  } else {
+    tbody.innerHTML = projectsList.map((p, idx) => {
+      const dc = Number(p.dc_mwp || 0);
+      const ac = Number(p.ac_mwp || 0);
+      const bess = Number(p.bess || 0);
+      totDc += dc;
+      totAc += ac;
+      totBess += bess;
+      const badge = p.status_type === "rtb"
+        ? `<span class="brtb">${esc(p.status_it)}</span>`
+        : `<span class="bprog">${esc(p.status_it)}</span>`;
+      return `<tr>
+        <td><strong>${idx + 1}</strong></td>
+        <td><strong>${esc(p.name)}</strong></td>
+        <td>${dc.toFixed(2)}</td>
+        <td>${ac.toFixed(2)}</td>
+        <td>${bess === 0 ? "0" : bess.toFixed(2)}</td>
+        <td>${esc(p.region_it)} <span style="color:var(--muted);font-size:.8rem">/ ${esc(p.region_en)}</span></td>
+        <td>${badge}</td>
+        <td style="text-align:right">
+          <div class="act-btns" style="justify-content:flex-end">
+            <button class="btn btn-g btn-sm" onclick="openModal(${p.id})">Modifica</button>
+            <button class="btn btn-d btn-sm" onclick="deleteProject(${p.id})">Elimina</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join("");
+  }
+
+  document.getElementById("kpi-count").textContent = String(projectsList.length);
+  document.getElementById("kpi-dc").textContent = totDc.toFixed(2);
+  document.getElementById("kpi-ac").textContent = totAc.toFixed(2);
+  document.getElementById("kpi-bess").textContent = totBess === 0 ? "0" : totBess.toFixed(2);
+}
+
+function syncRegionEn() {
+  const itVal = document.getElementById("f-region-it").value.trim().toLowerCase();
+  const enInput = document.getElementById("f-region-en");
+  const map = {
+    "sicilia": "Sicily",
+    "sardegna": "Sardinia",
+    "puglia": "Apulia",
+    "lazio": "Lazio",
+    "calabria": "Calabria",
+    "campania": "Campania",
+    "basilicata": "Basilicata",
+    "toscana": "Tuscany",
+    "lombardia": "Lombardy",
+    "piemonte": "Piedmont"
+  };
+  if (map[itVal]) {
+    enInput.value = map[itVal];
+  }
+}
+
+function syncStatusDefaults() {
+  const type = document.getElementById("f-status-type").value;
+  const stIt = document.getElementById("f-status-it");
+  const stEn = document.getElementById("f-status-en");
+  if (type === "rtb") {
+    stIt.value = "RTB";
+    stEn.value = "RTB";
+  } else if (stIt.value === "RTB" || !stIt.value) {
+    stIt.value = "In sviluppo Q4 2026";
+    stEn.value = "In progress Q4 2026";
+  }
+}
+
+function openModal(id) {
+  const modal = document.getElementById("project-modal");
+  const title = document.getElementById("modal-title");
+  if (id) {
+    const p = projectsList.find(x => x.id === id);
+    if (!p) return;
+    title.textContent = "Modifica Progetto: " + p.name;
+    document.getElementById("f-id").value = p.id;
+    document.getElementById("f-position").value = p.position || 1;
+    document.getElementById("f-name").value = p.name;
+    document.getElementById("f-dc").value = p.dc_mwp;
+    document.getElementById("f-ac").value = p.ac_mwp;
+    document.getElementById("f-bess").value = p.bess != null ? p.bess : 0;
+    document.getElementById("f-region-it").value = p.region_it;
+    document.getElementById("f-region-en").value = p.region_en;
+    document.getElementById("f-status-type").value = p.status_type || "prog";
+    document.getElementById("f-status-it").value = p.status_it;
+    document.getElementById("f-status-en").value = p.status_en;
+  } else {
+    title.textContent = "Nuovo Progetto";
+    document.getElementById("f-id").value = "";
+    document.getElementById("f-position").value = projectsList.length + 1;
+    document.getElementById("f-name").value = "";
+    document.getElementById("f-dc").value = "";
+    document.getElementById("f-ac").value = "";
+    document.getElementById("f-bess").value = 0;
+    document.getElementById("f-region-it").value = "Sicilia";
+    document.getElementById("f-region-en").value = "Sicily";
+    document.getElementById("f-status-type").value = "prog";
+    document.getElementById("f-status-it").value = "In sviluppo Q4 2026";
+    document.getElementById("f-status-en").value = "In progress Q4 2026";
+  }
+  modal.classList.add("open");
+}
+
+function closeModal() {
+  document.getElementById("project-modal").classList.remove("open");
+}
+
+async function saveProject(e) {
+  e.preventDefault();
+  const id = document.getElementById("f-id").value;
+  const payload = {
+    position: Number(document.getElementById("f-position").value || 1),
+    name: document.getElementById("f-name").value.trim(),
+    dc_mwp: Number(document.getElementById("f-dc").value || 0),
+    ac_mwp: Number(document.getElementById("f-ac").value || 0),
+    bess: Number(document.getElementById("f-bess").value || 0),
+    region_it: document.getElementById("f-region-it").value.trim(),
+    region_en: document.getElementById("f-region-en").value.trim(),
+    status_type: document.getElementById("f-status-type").value,
+    status_it: document.getElementById("f-status-it").value.trim(),
+    status_en: document.getElementById("f-status-en").value.trim()
+  };
+
+  const url = id ? `/api/projects?id=${encodeURIComponent(id)}` : "/api/projects";
+  const method = id ? "PUT" : "POST";
+
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: {
+        "content-type": "application/json",
+        "x-admin-password": getPassword()
+      },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      showAlert("dash-alert", data.error || "Errore nel salvataggio", "error");
+      return;
+    }
+    closeModal();
+    showAlert("dash-alert", id ? "Progetto aggiornato con successo!" : "Nuovo progetto aggiunto!", "success");
+    await fetchProjects();
+  } catch (err) {
+    showAlert("dash-alert", "Errore di rete: " + err.message, "error");
+  }
+}
+
+async function deleteProject(id) {
+  const p = projectsList.find(x => x.id === id);
+  if (!p) return;
+  if (!confirm(`Sei sicuro di voler eliminare il progetto "${p.name}"?`)) return;
+
+  try {
+    const res = await fetch(`/api/projects?id=${encodeURIComponent(id)}`, {
+      method: "DELETE",
+      headers: { "x-admin-password": getPassword() }
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      showAlert("dash-alert", data.error || "Errore durante l'eliminazione", "error");
+      return;
+    }
+    showAlert("dash-alert", `Progetto "${p.name}" eliminato.`, "success");
+    await fetchProjects();
+  } catch (err) {
+    showAlert("dash-alert", "Errore di rete: " + err.message, "error");
+  }
+}
+
+// Auto-login if session password is saved
+if (getPassword()) {
+  enterAdmin();
+}
+</script>
+</body>
+</html>
